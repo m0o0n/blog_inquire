@@ -1,14 +1,42 @@
-import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
+import store from './redux/redux-store';
+import { Provider } from 'react-redux';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import PostPage from './components/PostPage/PostPage';
+import { createGlobalStyle } from 'styled-components';
 const root = ReactDOM.createRoot(document.getElementById('root'));
+const Global = createGlobalStyle`
+*{
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+}
+a{
+  text-decoration: none;
+  transition: 0.4s all linear;
+  color: black;
+}
+a:hover{
+  text-decoration: underline;
+}
+`;
 root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
+    <>
+      <Global />
+      <BrowserRouter>
+        <Provider store={store}>
+          <Routes>
+            <Route path='/' element={<App />} />
+            <Route path='/post' >
+              <Route path=':id'element={ <PostPage />} />
+            </Route>
+          </Routes>
+        </Provider>
+      </BrowserRouter>
+    </>,
 );
 
 // If you want to start measuring performance in your app, pass a function
