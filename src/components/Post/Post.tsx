@@ -1,25 +1,42 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
-
-import { DeletePostThunk } from '../../redux/postReducer';
-import { EditPostReduxForm } from './EditPostForm';
+import { RootState } from '../../redux/redux-store';
+// @ts-ignore
+import { DeletePostThunk } from '../../redux/postReducer.ts';
+import { SubmitPostType } from '../../redux/comentReducer';
+// @ts-ignore
+import { EditPostReduxForm } from './EditPostForm.tsx';
 import Flex from '../Common/Felx';
 import Title from '../Common/Title';
 import Paragraph from '../Common/Paragraph';
 import Button from '../Common/Button';
-
-import { ChangeCurrentThunk } from '../../redux/comentReducer';
-const Post = props => {
+// @ts-ignore
+import { ChangeCurrentThunk } from '../../redux/comentReducer.ts';
+type mapStatePropsType = {
+  state: RootState;
+};
+type mapDispatchPropsType = {
+  ChangeCurrentThunk: (id: number, post: SubmitPostType) => Promise<void>;
+  DeletePostThunk: (id: number) => Promise<void>;
+};
+type OwnPropsType = {
+  id: number;
+  title: string;
+  description: string;
+  edit: boolean;
+};
+type PropsType = mapStatePropsType & mapDispatchPropsType & OwnPropsType;
+const Post: React.FC<PropsType> = props => {
   const [isEdit, setIsEdit] = useState(false);
-  const SubmitEdits = FormData => {
+  const SubmitEdits = (FormData: SubmitPostType): void => {
     props.ChangeCurrentThunk(props.id, {
       title: FormData.title,
       body: FormData.body,
     });
     setIsEdit(false);
   };
-  const DeletePost = id => {
+  const DeletePost = (id: number): void => {
     props.DeletePostThunk(id);
   };
   return (
@@ -78,7 +95,12 @@ const Post = props => {
   );
 };
 
-export default connect(state => ({ state: state }), {
+export default connect<
+  mapStatePropsType,
+  mapDispatchPropsType,
+  OwnPropsType,
+  RootState
+>((state: RootState): mapStatePropsType => ({ state: state }), {
   ChangeCurrentThunk,
   DeletePostThunk,
 })(Post);

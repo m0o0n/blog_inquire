@@ -1,11 +1,13 @@
+
+
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
+import App from './App.tsx';
 import reportWebVitals from './reportWebVitals';
-import store from './redux/redux-store';
+import store from './redux/redux-store.ts';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import PostPage from './components/PostPage/PostPage';
+import PostPage from './components/PostPage/PostPage.tsx';
 import { createGlobalStyle } from 'styled-components';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const Global = createGlobalStyle`

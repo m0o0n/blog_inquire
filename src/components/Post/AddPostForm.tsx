@@ -1,10 +1,15 @@
+// @ts-nocheck
 import { Field, reduxForm } from 'redux-form';
 import Button from '../Common/Button';
 import Flex from '../Common/Felx';
 import Form from '../Common/Form';
-import { renderField, renderTextAreaField } from './EditPostForm';
+import { renderField, renderTextAreaField } from './EditPostForm.tsx';
+import React from 'react';
 const required = value => (value ? undefined : 'Required');
-const AddPost = props => {
+type PropsType = {
+  handleSubmit: () => void;
+};
+const AddPost: React.FC<PropsType> = props => {
   return (
     <Form
       direction="column"

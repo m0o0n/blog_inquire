@@ -1,3 +1,4 @@
+import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import Button from '../Common/Button';
 import Flex from '../Common/Felx';
@@ -29,7 +30,10 @@ const renderTextAreaField = ({
     </Flex>
   </Flex>
 );
-const AddComment = props => {
+type PropsType = {
+  handleSubmit: () => void;
+};
+const AddComment: React.FC<PropsType> = props => {
   return (
     <Form
       direction="column"

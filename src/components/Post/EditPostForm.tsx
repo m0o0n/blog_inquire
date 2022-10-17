@@ -1,5 +1,5 @@
 import { Field, reduxForm } from 'redux-form';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import Textarea from '../Common/Textarea';
 
@@ -69,8 +69,17 @@ export const renderTextAreaField = ({
     </Flex>
   </Flex>
 );
-
-const EditPost = props => {
+type initializeType = {
+  title: string;
+  body: string;
+};
+type PropsType = {
+  title: string;
+  description: string;
+  initialize: (arg: initializeType) => any;
+  handleSubmit: () => void;
+};
+const EditPost: React.FC<PropsType> = props => {
   useEffect(() => {
     props.initialize({ title: props.title, body: props.description });
   }, []);
