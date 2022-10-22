@@ -1,5 +1,5 @@
-import { PostType } from './../redux/postReducer';
-import { SubmitPostType } from './../redux/comentReducer';
+import { PostType } from './../redux//PostReducer/postReducerTypes';
+import { SubmitPostType } from './../redux/CommentReducer/commentReducerTypes';
 // @ts-ignore
 import $HostInstance from './api.ts';
 
