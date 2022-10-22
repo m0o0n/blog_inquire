@@ -144,6 +144,7 @@ export const ChangeCurrentThunk = (
 export const CreateCommentThunk = (comment: SubmitCommentType): ThunkType => {
   return async dispatch => {
     const response = await Create(comment);
+    // @ts-ignore
     dispatch(reset('AddComment'));
     dispatch(
       CreateCommentAC({

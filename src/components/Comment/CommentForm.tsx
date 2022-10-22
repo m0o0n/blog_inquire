@@ -1,10 +1,10 @@
 import React from 'react';
-import { Field, reduxForm } from 'redux-form';
+import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import Button from '../Common/Button';
 import Flex from '../Common/Felx';
 import Form from '../Common/Form';
 import Textarea from '../Common/Textarea';
-const required = value => (value ? undefined : 'Required');
+const required = (value: any) => (value ? undefined : 'Required');
 const renderTextAreaField = ({
   input,
   label,
@@ -33,7 +33,12 @@ const renderTextAreaField = ({
 type PropsType = {
   handleSubmit: () => void;
 };
-const AddComment: React.FC<PropsType> = props => {
+type initializeType = {
+  body: string;
+};
+const AddComment: React.FC<
+  InjectedFormProps<initializeType, PropsType> & PropsType
+> = props => {
   return (
     <Form
       direction="column"
@@ -60,6 +65,6 @@ const AddComment: React.FC<PropsType> = props => {
     </Form>
   );
 };
-export const AddCommentReduxForm = reduxForm({
+export const AddCommentReduxForm = reduxForm<initializeType, PropsType>({
   form: 'AddComment',
 })(AddComment);

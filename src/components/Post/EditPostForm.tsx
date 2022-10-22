@@ -1,4 +1,4 @@
-import { Field, reduxForm } from 'redux-form';
+import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import React, { useEffect } from 'react';
 
 import Textarea from '../Common/Textarea';
@@ -10,7 +10,7 @@ import Title from '../Common/Title';
 import Paragraph from '../Common/Paragraph';
 import Button from '../Common/Button';
 
-const required = value => (value ? undefined : 'Required');
+const required = (value: any) => (value ? undefined : 'Required');
 export const renderField = ({
   input,
   label,
@@ -79,7 +79,9 @@ type PropsType = {
   initialize: (arg: initializeType) => any;
   handleSubmit: () => void;
 };
-const EditPost: React.FC<PropsType> = props => {
+const EditPost: React.FC<
+  InjectedFormProps<initializeType, PropsType> & PropsType
+> = props => {
   useEffect(() => {
     props.initialize({ title: props.title, body: props.description });
   }, []);
@@ -116,6 +118,6 @@ const EditPost: React.FC<PropsType> = props => {
     </Form>
   );
 };
-export const EditPostReduxForm = reduxForm({
+export const EditPostReduxForm = reduxForm<initializeType, PropsType>({
   form: 'EditPost',
 })(EditPost);

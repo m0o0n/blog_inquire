@@ -1,5 +1,7 @@
-import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
-import thunkMidleWare from 'redux-thunk';
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
+
+// @ts-ignore
+import logger from 'redux-logger';
 // @ts-ignore
 import PostsReducer from './postReducer.ts';
 import { reducer as formReducer } from 'redux-form';
@@ -11,10 +13,10 @@ const reducers = combineReducers({
   form: formReducer,
 });
 export type RootState = ReturnType<typeof reducers>;
-// @ts-ignore
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(
-  reducers,
-  composeEnhancers(applyMiddleware(thunkMidleWare)),
-);
+
+const store = configureStore({
+  reducer: reducers,
+  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(logger),
+});
+export type AppDispatch = typeof store.dispatch;
 export default store;

@@ -1,15 +1,22 @@
 // @ts-nocheck
-import { Field, reduxForm } from 'redux-form';
+import { Field, InjectedFormProps, reduxForm } from 'redux-form';
 import Button from '../Common/Button';
 import Flex from '../Common/Felx';
 import Form from '../Common/Form';
 import { renderField, renderTextAreaField } from './EditPostForm.tsx';
 import React from 'react';
-const required = value => (value ? undefined : 'Required');
+
+const required = (value: any) => (value ? undefined : 'Required');
 type PropsType = {
   handleSubmit: () => void;
 };
-const AddPost: React.FC<PropsType> = props => {
+type initializeType = {
+  title: string;
+  body: string;
+};
+const AddPost: React.FC<
+  InjectedFormProps<initializeType, PropsType> & PropsType
+> = props => {
   return (
     <Form
       direction="column"
@@ -47,6 +54,6 @@ const AddPost: React.FC<PropsType> = props => {
     </Form>
   );
 };
-export const AddPostReduxForm = reduxForm({
+export const AddPostReduxForm = reduxForm<initializeType, PropsType>({
   form: 'AddPost',
 })(AddPost);

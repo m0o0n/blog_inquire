@@ -86,7 +86,6 @@ const Post: React.FC<PropsType> = props => {
           <EditPostReduxForm
             title={props.title}
             description={props.description}
-            postId={props.id}
             onSubmit={SubmitEdits}
           />
         </Flex>
