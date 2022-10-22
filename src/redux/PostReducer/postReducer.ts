@@ -1,17 +1,16 @@
 // @ts-ignore
-import { GetAll, CreatePost, Delete } from '../API/postApi.ts';
+import { GetAll, CreatePost, Delete } from '../../API/postApi.ts';
 import { reset } from 'redux-form';
-import { ThunkAction } from 'redux-thunk';
-// @ts-ignore
-import { RootState } from './redux-store.ts';
-export type PostType = {
-  id: number;
-  title: string;
-  body: string;
-};
-type InitialStateType = {
-  Posts: Array<PostType>;
-};
+import {
+  ActionTypes,
+  CreatePostACType,
+  DeletePostACType,
+  FetchPostsACType,
+  InitialStateType,
+  PostType,
+  ThunkType,
+} from './postReducerTypes';
+
 const InitialState: InitialStateType = {
   Posts: [
     {
@@ -22,7 +21,7 @@ const InitialState: InitialStateType = {
     },
   ],
 };
-type ActionTypes = FetchPostsACType | CreatePostACType | DeletePostACType;
+
 const PostsReducer = (
   state: InitialStateType = InitialState,
   action: ActionTypes,
@@ -48,32 +47,20 @@ const PostsReducer = (
   }
 };
 
-type FetchPostsACType = {
-  type: 'FetchPosts';
-  post: Array<PostType>;
-};
 const FetchPostsAC = (post: Array<PostType>): FetchPostsACType => ({
   type: 'FetchPosts',
   post,
 });
-type CreatePostACType = {
-  type: 'CreatePost';
-  post: PostType;
-};
+
 const CreatePostAC = (post: PostType): CreatePostACType => ({
   type: 'CreatePost',
   post,
 });
-type DeletePostACType = {
-  type: 'DeletePost';
-  id: number;
-};
+
 const DeletePostAC = (id: number): DeletePostACType => ({
   type: 'DeletePost',
   id,
 });
-
-type ThunkType = ThunkAction<Promise<void>, RootState, unknown, ActionTypes>;
 
 export const FetchPostsThunk = (): ThunkType => {
   return async dispatch => {
@@ -85,6 +72,7 @@ export const FetchPostsThunk = (): ThunkType => {
 export const CreatePostThunk = (post: PostType): ThunkType => {
   return async dispatch => {
     const response = await CreatePost(post);
+    // @ts-ignore
     dispatch(reset('AddPost'));
     dispatch(
       CreatePostAC({

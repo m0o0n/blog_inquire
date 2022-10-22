@@ -4,9 +4,11 @@ import { useParams } from 'react-router-dom';
 import {
   FetchCurrentThunk,
   CreateCommentThunk,
-} from '../../redux/comentReducer.ts';
+} from '../../redux/CommentReducer/comentReducer.ts';
 import { RootState } from '../../redux/redux-store';
-import { CommentsType } from '../../redux/comentReducer';
+// @ts-ignore
+// eslint-disable-next-line max-len
+import { CommentsType } from '../../redux/CommentReducer/commentReducerTypes.ts';
 import { connect } from 'react-redux';
 import Post from '../Post/Post.tsx';
 import { AddCommentReduxForm } from '../Comment/CommentForm.tsx';

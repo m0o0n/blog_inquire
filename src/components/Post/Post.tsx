@@ -3,8 +3,8 @@ import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { RootState } from '../../redux/redux-store';
 // @ts-ignore
-import { DeletePostThunk } from '../../redux/postReducer.ts';
-import { SubmitPostType } from '../../redux/comentReducer';
+import { DeletePostThunk } from '../../redux/PostReducer/postReducer.ts';
+import { SubmitPostType } from '../../redux/CommentReducer/commentReducerTypes';
 // @ts-ignore
 import { EditPostReduxForm } from './EditPostForm.tsx';
 import Flex from '../Common/Felx';
@@ -12,7 +12,8 @@ import Title from '../Common/Title';
 import Paragraph from '../Common/Paragraph';
 import Button from '../Common/Button';
 // @ts-ignore
-import { ChangeCurrentThunk } from '../../redux/comentReducer.ts';
+// eslint-disable-next-line max-len
+import { ChangeCurrentThunk } from '../../redux/CommentReducer/comentReducer.ts';
 type mapStatePropsType = {
   state: RootState;
 };

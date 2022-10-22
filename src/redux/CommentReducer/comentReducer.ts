@@ -1,32 +1,21 @@
 // @ts-ignore
-import { Create } from '../API/commentApi.ts';
+import { Create } from '../../API/commentApi.ts';
 // @ts-ignore
-import { GetOne, UpDate } from '../API/postApi.ts';
+import { GetOne, UpDate } from '../../API/postApi.ts';
 import { reset } from 'redux-form';
-import { ThunkAction } from 'redux-thunk';
-// @ts-ignore
-import { RootState } from './redux-store.ts';
-export type CommentsType = {
-  id: number;
-  postId: number;
-  body: string;
-};
-export type SubmitPostType = {
-  title: string;
-  body: string;
-};
-export type SubmitCommentType = {
-  postId: number;
-  body: string;
-};
-type InitialStateType = {
-  CurrentPost: {
-    id: number;
-    title: string;
-    body: string;
-    comments: Array<CommentsType>;
-  };
-};
+
+import {
+  ActionTypes,
+  ChangeCurrentACType,
+  CommentsType,
+  CreateCommentACType,
+  FetchCurrentACType,
+  InitialStateType,
+  SubmitCommentType,
+  SubmitPostType,
+  ThunkType,
+} from './commentReducerTypes';
+
 const InitialState: InitialStateType = {
   CurrentPost: {
     id: 0,
@@ -35,10 +24,7 @@ const InitialState: InitialStateType = {
     comments: [],
   },
 };
-type ActionTypes =
-  | CreateCommentACType
-  | FetchCurrentACType
-  | ChangeCurrentACType;
+
 const comentReducer = (
   state = InitialState,
   action: ActionTypes,
@@ -79,21 +65,11 @@ const comentReducer = (
   }
 };
 
-type CreateCommentACType = {
-  type: 'CreateComment';
-  body: CommentsType;
-};
 const CreateCommentAC = (body: CommentsType): CreateCommentACType => ({
   type: 'CreateComment',
   body,
 });
-type FetchCurrentACType = {
-  type: 'FetchCurrent';
-  id: number;
-  title: string;
-  body: string;
-  comments: Array<CommentsType>;
-};
+
 const FetchCurrentAC = (
   id: number,
   title: string,
@@ -106,11 +82,7 @@ const FetchCurrentAC = (
   body,
   comments,
 });
-type ChangeCurrentACType = {
-  type: 'ChangeCurrent';
-  title: string;
-  body: string;
-};
+
 export const ChangeCurrentAC = (
   title: string,
   body: string,
@@ -120,7 +92,6 @@ export const ChangeCurrentAC = (
   body,
 });
 
-type ThunkType = ThunkAction<Promise<void>, RootState, unknown, ActionTypes>;
 export const FetchCurrentThunk = (id: number): ThunkType => {
   return async dispatch => {
     const current = await GetOne(id);

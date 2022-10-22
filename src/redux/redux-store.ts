@@ -3,10 +3,10 @@ import { configureStore, combineReducers } from '@reduxjs/toolkit';
 // @ts-ignore
 import logger from 'redux-logger';
 // @ts-ignore
-import PostsReducer from './postReducer.ts';
+import PostsReducer from './PostReducer/postReducer.ts';
 import { reducer as formReducer } from 'redux-form';
 // @ts-ignore
-import comentReducer from './comentReducer.ts';
+import comentReducer from './CommentReducer/comentReducer.ts';
 const reducers = combineReducers({
   Posts: PostsReducer,
   Comments: comentReducer,

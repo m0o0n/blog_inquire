@@ -10,7 +10,7 @@ import {
   PostType,
   CreatePostThunk,
   FetchPostsThunk,
-} from '../../redux/postReducer.ts';
+} from '../../redux/PostReducer/postReducer.ts';
 import { SubmitPostType } from '../../redux/comentReducer';
 type mapStatePropsType = {
   state: RootState;
