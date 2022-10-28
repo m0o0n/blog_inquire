@@ -4,11 +4,12 @@ import { useParams } from 'react-router-dom';
 import {
   FetchCurrentThunk,
   CreateCommentThunk,
-} from '../../redux/CommentReducer/comentReducer.ts';
+} from '../../redux/CommentReducer/comentActions.ts';
 import { RootState } from '../../redux/redux-store';
 // @ts-ignore
 // eslint-disable-next-line max-len
 import { CommentsType } from '../../redux/CommentReducer/commentReducerTypes.ts';
+import { useAppDispatch, useAppSelector } from '../../redux/redux.ts';
 import { connect } from 'react-redux';
 import Post from '../Post/Post.tsx';
 import { AddCommentReduxForm } from '../Comment/CommentForm.tsx';
@@ -33,17 +34,20 @@ type FormDataType = {
 };
 const PostPage: React.FC<PropsType> = props => {
   const { id } = useParams();
+  const { CurrentPost } = useAppSelector((state: RootState) => state.Comments);
+  const dispatch = useAppDispatch();
   useEffect(() => {
-    props.FetchCurrentThunk(id);
+    dispatch(FetchCurrentThunk(id));
   }, []);
+
   const AddComment: void = (FormData: FormDataType) => {
     props.CreateCommentThunk({ postId: Number(id), body: FormData.body });
   };
   return (
     <Flex width="50%" margin="0 auto" direction="column">
       <Post
-        title={props.CurrentPost.title}
-        description={props.CurrentPost.body}
+        title={CurrentPost.title}
+        description={CurrentPost.body}
         id={id}
         edit={true}
       />

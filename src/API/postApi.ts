@@ -28,13 +28,13 @@ type UpDateType = {
   title: string;
   body: string;
 };
-export const UpDate = async (id: string, post: SubmitPostType) => {
+export const UpDate = async (id: number, post: SubmitPostType) => {
   const { data } = await $HostInstance.put<UpDateType>(`posts/${id}`, post);
 
   return data;
 };
 
-export const Delete = async (id: string) => {
+export const Delete = async (id: number) => {
   const { data } = await $HostInstance.delete<any>(`posts/${id}`);
   return data;
 };

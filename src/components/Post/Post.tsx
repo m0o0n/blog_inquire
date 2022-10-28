@@ -1,19 +1,24 @@
+// @ts-nocheck
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { RootState } from '../../redux/redux-store';
-// @ts-ignore
-import { DeletePostThunk } from '../../redux/PostReducer/postReducer.ts';
+
 import { SubmitPostType } from '../../redux/CommentReducer/commentReducerTypes';
-// @ts-ignore
+
 import { EditPostReduxForm } from './EditPostForm.tsx';
 import Flex from '../Common/Felx';
 import Title from '../Common/Title';
 import Paragraph from '../Common/Paragraph';
 import Button from '../Common/Button';
-// @ts-ignore
+
 // eslint-disable-next-line max-len
-import { ChangeCurrentThunk } from '../../redux/CommentReducer/comentReducer.ts';
+import { ChangeCurrentThunk } from '../../redux/CommentReducer/comentActions.ts';
+
+// eslint-disable-next-line max-len
+// import { SubmitPostType } from '../../redux/CommentReducer/commentReducerTypes.ts';
+import { useAppDispatch } from '../../redux/redux.ts';
+import { DeletePostThunk } from '../../redux/PostReducer/PostActions.ts';
 type mapStatePropsType = {
   state: RootState;
 };
@@ -29,16 +34,20 @@ type OwnPropsType = {
 };
 type PropsType = mapStatePropsType & mapDispatchPropsType & OwnPropsType;
 const Post: React.FC<PropsType> = props => {
+  const dispatch = useAppDispatch();
+  // const { Posts } = useAppSelector((state: RootState) => state.Posts);
   const [isEdit, setIsEdit] = useState(false);
   const SubmitEdits = (FormData: SubmitPostType): void => {
-    props.ChangeCurrentThunk(props.id, {
-      title: FormData.title,
-      body: FormData.body,
-    });
+    dispatch(
+      ChangeCurrentThunk({
+        id: props.id,
+        post: { title: FormData.title, body: FormData.body },
+      }),
+    );
     setIsEdit(false);
   };
   const DeletePost = (id: number): void => {
-    props.DeletePostThunk(id);
+    dispatch(DeletePostThunk(id));
   };
   return (
     <Flex width="100%" justify="flex-start" margin="10px 0 10px 0">
@@ -102,5 +111,4 @@ export default connect<
   RootState
 >((state: RootState): mapStatePropsType => ({ state: state }), {
   ChangeCurrentThunk,
-  DeletePostThunk,
 })(Post);

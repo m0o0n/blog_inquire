@@ -1,4 +1,7 @@
-import { SubmitCommentType } from './../redux/comentReducer';
+// @ts-nocheck
+
+// eslint-disable-next-line max-len
+import { SubmitCommentType } from './../redux/CommentReducer/commentReducerTypes.ts';
 // @ts-ignore
 import $HostInstance from './api.ts';
 

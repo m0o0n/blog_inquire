@@ -1,130 +1,123 @@
-// @ts-ignore
-import { Create } from '../../API/commentApi.ts';
-// @ts-ignore
-import { GetOne, UpDate } from '../../API/postApi.ts';
-import { reset } from 'redux-form';
+// @ts-nocheck
+import { FetchCurrentThunk, ChangeCurrentThunk } from './comentActions.ts';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import {
-  ActionTypes,
-  ChangeCurrentACType,
-  CommentsType,
-  CreateCommentACType,
-  FetchCurrentACType,
-  InitialStateType,
-  SubmitCommentType,
-  SubmitPostType,
-  ThunkType,
-} from './commentReducerTypes';
+import { InitialStateType, SubmitPostType } from './commentReducerTypes.ts';
+import { CurrentPostType } from './commentReducerTypes';
 
-const InitialState: InitialStateType = {
+const initialState: InitialStateType = {
   CurrentPost: {
     id: 0,
     title: '',
     body: '',
     comments: [],
   },
+  isLoading: false,
+  error: '',
 };
+const comentReducer = createSlice({
+  name: 'coment',
+  initialState,
+  reducers: {},
+  extraReducers: {
+    [FetchCurrentThunk.pending.type]: state => {
+      state.isLoading = true;
+    },
+    [FetchCurrentThunk.fulfilled.type]: (
+      state,
+      action: PayloadAction<CurrentPostType>,
+    ) => {
+      state.isLoading = false;
+      state.error = '';
+      state.CurrentPost = action.payload;
+    },
+    [FetchCurrentThunk.rejected.type]: (
+      state,
+      action: PayloadAction<string>,
+    ) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
 
-const comentReducer = (
-  state = InitialState,
-  action: ActionTypes,
-): InitialStateType => {
-  switch (action.type) {
-    case 'FetchCurrent':
-      return {
-        ...state,
-        CurrentPost: {
-          id: action.id,
-          title: action.title,
-          body: action.body,
-          comments: [...action.comments],
-        },
-      };
-    case 'ChangeCurrent':
-      return {
-        ...state,
-        CurrentPost: {
-          id: state.CurrentPost.id,
-          title: action.title,
-          body: action.body,
-          comments: [...state.CurrentPost.comments],
-        },
-      };
-    case 'CreateComment':
-      return {
-        ...state,
-        CurrentPost: {
-          id: state.CurrentPost.id,
-          title: state.CurrentPost.title,
-          body: state.CurrentPost.body,
-          comments: [...state.CurrentPost.comments, action.body],
-        },
-      };
-    default:
-      return state;
-  }
-};
-
-const CreateCommentAC = (body: CommentsType): CreateCommentACType => ({
-  type: 'CreateComment',
-  body,
+    [ChangeCurrentThunk.pending.type]: state => {
+      state.isLoading = true;
+    },
+    [ChangeCurrentThunk.fulfilled.type]: (
+      state,
+      action: PayloadAction<SubmitPostType>,
+    ) => {
+      state.isLoading = false;
+      state.error = '';
+      state.CurrentPost.id = action.payload.id;
+      state.CurrentPost.title = action.payload.title;
+      state.CurrentPost.body = action.payload.body;
+    },
+    [ChangeCurrentThunk.rejected.type]: (
+      state,
+      action: PayloadAction<string>,
+    ) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+  },
 });
 
-const FetchCurrentAC = (
-  id: number,
-  title: string,
-  body: string,
-  comments: Array<CommentsType>,
-): FetchCurrentACType => ({
-  type: 'FetchCurrent',
-  id,
-  title,
-  body,
-  comments,
-});
+// const comentReducer = (
+//   state = InitialState,
+//   action: ActionTypes,
+// ): InitialStateType => {
+//   switch (action.type) {
+//     case 'FetchCurrent':
+//       return {
+//         ...state,
+//         CurrentPost: {
+//           id: action.id,
+//           title: action.title,
+//           body: action.body,
+//           comments: [...action.comments],
+//         },
+//       };
+//     case 'ChangeCurrent':
+//       return {
+//         ...state,
+//         CurrentPost: {
+//           id: state.CurrentPost.id,
+//           title: action.title,
+//           body: action.body,
+//           comments: [...state.CurrentPost.comments],
+//         },
+//       };
+//     case 'CreateComment':
+//       return {
+//         ...state,
+//         CurrentPost: {
+//           id: state.CurrentPost.id,
+//           title: state.CurrentPost.title,
+//           body: state.CurrentPost.body,
+//           comments: [...state.CurrentPost.comments, action.body],
+//         },
+//       };
+//     default:
+//       return state;
+//   }
+// };
 
-export const ChangeCurrentAC = (
-  title: string,
-  body: string,
-): ChangeCurrentACType => ({
-  type: 'ChangeCurrent',
-  title,
-  body,
-});
+// const CreateCommentAC = (body: CommentsType): CreateCommentACType => ({
+//   type: 'CreateComment',
+//   body,
+// });
 
-export const FetchCurrentThunk = (id: number): ThunkType => {
-  return async dispatch => {
-    const current = await GetOne(id);
-    dispatch(
-      FetchCurrentAC(current.id, current.title, current.body, current.comments),
-    );
-  };
-};
+// const FetchCurrentAC = (
+//   id: number,
+//   title: string,
+//   body: string,
+//   comments: Array<CommentsType>,
+// ): FetchCurrentACType => ({
+//   type: 'FetchCurrent',
+//   id,
+//   title,
+//   body,
+//   comments,
+// });
 
-export const ChangeCurrentThunk = (
-  id: number,
-  post: SubmitPostType,
-): ThunkType => {
-  return async dispatch => {
-    const response = await UpDate(id, post);
-
-    dispatch(ChangeCurrentAC(response.title, response.body));
-  };
-};
-
-export const CreateCommentThunk = (comment: SubmitCommentType): ThunkType => {
-  return async dispatch => {
-    const response = await Create(comment);
-    // @ts-ignore
-    dispatch(reset('AddComment'));
-    dispatch(
-      CreateCommentAC({
-        id: response.id,
-        postId: response.postId,
-        body: response.body,
-      }),
-    );
-  };
-};
-
-export default comentReducer;
+export default comentReducer.reducer;

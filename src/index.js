@@ -4,11 +4,12 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App.tsx';
 import reportWebVitals from './reportWebVitals';
-import store from './redux/redux-store.ts';
+
 import { Provider } from 'react-redux';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import PostPage from './components/PostPage/PostPage.tsx';
 import { createGlobalStyle } from 'styled-components';
+import { setupStore } from './redux/redux-store.ts';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const Global = createGlobalStyle`
 *{
@@ -25,20 +26,21 @@ a:hover{
   text-decoration: underline;
 }
 `;
+const store = setupStore();
 root.render(
-    <>
+  <Provider store={store}>
       <Global />
       <BrowserRouter>
-        <Provider store={store}>
+
           <Routes>
             <Route path='/' element={<App />} />
             <Route path='/post' >
               <Route path=':id'element={ <PostPage />} />
             </Route>
           </Routes>
-        </Provider>
+
       </BrowserRouter>
-    </>,
+      </Provider>,
 );
 
 // If you want to start measuring performance in your app, pass a function

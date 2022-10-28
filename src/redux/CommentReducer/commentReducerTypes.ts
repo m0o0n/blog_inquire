@@ -20,13 +20,16 @@ export type SubmitCommentType = {
   postId: number;
   body: string;
 };
+export type CurrentPostType = {
+  id: number;
+  title: string;
+  body: string;
+  comments: Array<CommentsType>;
+};
 export type InitialStateType = {
-  CurrentPost: {
-    id: number;
-    title: string;
-    body: string;
-    comments: Array<CommentsType>;
-  };
+  CurrentPost: CurrentPostType;
+  isLoading: boolean;
+  error: string;
 };
 export type CreateCommentACType = {
   type: 'CreateComment';

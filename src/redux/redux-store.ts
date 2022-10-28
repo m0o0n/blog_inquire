@@ -1,7 +1,4 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-
-// @ts-ignore
-import logger from 'redux-logger';
 // @ts-ignore
 import PostsReducer from './PostReducer/postReducer.ts';
 import { reducer as formReducer } from 'redux-form';
@@ -12,11 +9,12 @@ const reducers = combineReducers({
   Comments: comentReducer,
   form: formReducer,
 });
-export type RootState = ReturnType<typeof reducers>;
 
-const store = configureStore({
-  reducer: reducers,
-  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(logger),
-});
-export type AppDispatch = typeof store.dispatch;
-export default store;
+export const setupStore = () => {
+  return configureStore({
+    reducer: reducers,
+  });
+};
+export type RootState = ReturnType<typeof reducers>;
+export type AppStore = ReturnType<typeof setupStore>;
+export type AppDispatch = AppStore['dispatch'];

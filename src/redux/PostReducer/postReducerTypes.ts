@@ -8,6 +8,8 @@ export type PostType = {
 };
 export type InitialStateType = {
   Posts: Array<PostType>;
+  isLoading: boolean;
+  error: string;
 };
 
 export type FetchPostsACType = {
