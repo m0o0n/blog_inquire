@@ -7,13 +7,12 @@ import {
   CreateCommentThunk,
 } from '../../redux/CommentReducer/comentActions.ts';
 import { RootState } from '../../redux/redux-store';
-// eslint-disable-next-line max-len
-import { CommentsType } from '../../redux/CommentReducer/commentReducerTypes.ts';
 import { useAppDispatch, useAppSelector } from '../../redux/redux.ts';
 import Post from '../Post/Post.tsx';
 import { AddCommentReduxForm } from '../Comment/CommentForm.tsx';
 import Comment from '../Comment/Comment.tsx';
 import Flex from '../Common/Felx';
+import { CommentsType } from '../../Models/models.ts';
 
 type FormDataType = {
   body: string;

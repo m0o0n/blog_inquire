@@ -1,7 +1,8 @@
 // @ts-nocheck
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-import { InitialStateType, PostType } from './postReducerTypes.ts';
+import { InitialStateType } from './postReducerTypes.ts';
+import { PostType } from '../../Models/models.ts';
 import {
   CreatePostThunk,
   DeletePostThunk,

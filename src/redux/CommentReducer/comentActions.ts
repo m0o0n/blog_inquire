@@ -2,7 +2,7 @@
 import { Create } from './../../API/commentApi.ts';
 import { GetOne, UpDate } from './../../API/postApi.ts';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { SubmitPostType, SubmitCommentType } from './commentReducerTypes.ts';
+import { SubmitPostType, SubmitCommentType } from '../../Models/models.ts';
 
 export const FetchCurrentThunk = createAsyncThunk(
   'coment/fetchCurrent',

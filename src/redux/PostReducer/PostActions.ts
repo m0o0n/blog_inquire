@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { SubmitPostType } from './../CommentReducer/commentReducerTypes.ts';
+import { SubmitPostType } from './../../Models/models.ts';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { CreatePost, Delete, GetAll } from '../../API/postApi.ts';
 export const FetchPostsThunk = createAsyncThunk(

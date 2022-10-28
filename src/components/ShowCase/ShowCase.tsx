@@ -10,7 +10,7 @@ import {
   CreatePostThunk,
   FetchPostsThunk,
 } from '../../redux/PostReducer/PostActions.ts';
-import { SubmitPostType } from '../../redux/comentReducer';
+import { SubmitPostType } from '../../Models/models.ts';
 import { useAppDispatch, useAppSelector } from '../../redux/redux.ts';
 
 const ShowCase: React.FC = () => {

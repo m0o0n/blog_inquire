@@ -2,7 +2,8 @@
 import { SubmitCommentType } from './commentReducerTypes.ts';
 import { FetchCurrentThunk, ChangeCurrentThunk } from './comentActions.ts';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { InitialStateType, SubmitPostType } from './commentReducerTypes.ts';
+import { InitialStateType } from './commentReducerTypes.ts';
+import { SubmitPostType } from '../../Models/models.ts';
 import { CurrentPostType } from './commentReducerTypes.ts';
 import { CreateCommentThunk } from './comentActions.ts';
 
@@ -83,63 +84,5 @@ const comentReducer = createSlice({
     },
   },
 });
-
-// const comentReducer = (
-//   state = InitialState,
-//   action: ActionTypes,
-// ): InitialStateType => {
-//   switch (action.type) {
-//     case 'FetchCurrent':
-//       return {
-//         ...state,
-//         CurrentPost: {
-//           id: action.id,
-//           title: action.title,
-//           body: action.body,
-//           comments: [...action.comments],
-//         },
-//       };
-//     case 'ChangeCurrent':
-//       return {
-//         ...state,
-//         CurrentPost: {
-//           id: state.CurrentPost.id,
-//           title: action.title,
-//           body: action.body,
-//           comments: [...state.CurrentPost.comments],
-//         },
-//       };
-//     case 'CreateComment':
-//       return {
-//         ...state,
-//         CurrentPost: {
-//           id: state.CurrentPost.id,
-//           title: state.CurrentPost.title,
-//           body: state.CurrentPost.body,
-//           comments: [...state.CurrentPost.comments, action.body],
-//         },
-//       };
-//     default:
-//       return state;
-//   }
-// };
-
-// const CreateCommentAC = (body: CommentsType): CreateCommentACType => ({
-//   type: 'CreateComment',
-//   body,
-// });
-
-// const FetchCurrentAC = (
-//   id: number,
-//   title: string,
-//   body: string,
-//   comments: Array<CommentsType>,
-// ): FetchCurrentACType => ({
-//   type: 'FetchCurrent',
-//   id,
-//   title,
-//   body,
-//   comments,
-// });
 
 export default comentReducer.reducer;

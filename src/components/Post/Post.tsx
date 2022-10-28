@@ -3,9 +3,7 @@ import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { RootState } from '../../redux/redux-store';
-
-import { SubmitPostType } from '../../redux/CommentReducer/commentReducerTypes';
-
+import { SubmitPostType } from '../../Models/models.ts';
 import { EditPostReduxForm } from './EditPostForm.tsx';
 import Flex from '../Common/Felx';
 import Title from '../Common/Title';
