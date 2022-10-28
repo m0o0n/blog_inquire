@@ -1,9 +1,10 @@
 // @ts-nocheck
+import { SubmitCommentType } from './commentReducerTypes.ts';
 import { FetchCurrentThunk, ChangeCurrentThunk } from './comentActions.ts';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-
 import { InitialStateType, SubmitPostType } from './commentReducerTypes.ts';
-import { CurrentPostType } from './commentReducerTypes';
+import { CurrentPostType } from './commentReducerTypes.ts';
+import { CreateCommentThunk } from './comentActions.ts';
 
 const initialState: InitialStateType = {
   CurrentPost: {
@@ -53,6 +54,27 @@ const comentReducer = createSlice({
       state.CurrentPost.body = action.payload.body;
     },
     [ChangeCurrentThunk.rejected.type]: (
+      state,
+      action: PayloadAction<string>,
+    ) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    [CreateCommentThunk.pending.type]: state => {
+      state.isLoading = true;
+    },
+    [CreateCommentThunk.fulfilled.type]: (
+      state,
+      action: PayloadAction<SubmitCommentType>,
+    ) => {
+      state.isLoading = false;
+      state.error = '';
+      state.CurrentPost.comments = [
+        ...state.CurrentPost.comments,
+        action.payload,
+      ];
+    },
+    [CreateCommentThunk.rejected.type]: (
       state,
       action: PayloadAction<string>,
     ) => {

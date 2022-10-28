@@ -1,6 +1,7 @@
 /* eslint-disable indent */
 // @ts-nocheck
 import React, { useEffect } from 'react';
+import { reset } from 'redux-form';
 import Post from '../Post/Post.tsx';
 import { AddPostReduxForm } from '../Post/AddPostForm.tsx';
 import Flex from '../Common/Felx';
@@ -20,6 +21,7 @@ const ShowCase: React.FC = () => {
   }, []);
   const CreatePost = (FormData: SubmitPostType) => {
     dispatch(CreatePostThunk({ title: FormData.title, body: FormData.body }));
+    dispatch(reset('AddPost'));
   };
   return (
     <Flex direction="column" align="flex-start" width="70%" margin="0 auto">
